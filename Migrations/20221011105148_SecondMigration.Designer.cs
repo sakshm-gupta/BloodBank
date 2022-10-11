@@ -4,6 +4,7 @@ using BloodBankMSApi.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BloodBankMSApi.Migrations
 {
     [DbContext(typeof(BloodBankMSContext))]
-    partial class BloodBankMSContextModelSnapshot : ModelSnapshot
+    [Migration("20221011105148_SecondMigration")]
+    partial class SecondMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -139,7 +141,11 @@ namespace BloodBankMSApi.Migrations
                     b.Property<DateTime>("BloodDonationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("BloodDonorId")
+                    b.Property<string>("BloodDonorId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("BloodDonorId1")
                         .HasColumnType("int");
 
                     b.Property<double>("HBCount")
@@ -153,7 +159,7 @@ namespace BloodBankMSApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BloodDonorId");
+                    b.HasIndex("BloodDonorId1");
 
                     b.ToTable("BloodDonorDonations");
                 });
@@ -233,9 +239,7 @@ namespace BloodBankMSApi.Migrations
                 {
                     b.HasOne("BloodBankMSApi.Models.BloodDonor", "BloodDonor")
                         .WithMany()
-                        .HasForeignKey("BloodDonorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("BloodDonorId1");
 
                     b.Navigation("BloodDonor");
                 });
