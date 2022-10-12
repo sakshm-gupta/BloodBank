@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using BloodBankMSApi.Models;
 
 namespace BloodBankMSApi.Models
 {
@@ -21,5 +22,7 @@ namespace BloodBankMSApi.Models
         public DbSet<BloodInventory> BloodInventories { get; set; }
 
         public DbSet<Hospital> Hospitals { get; set; }
+
+        public DbSet<BloodBankMSApi.Models.User> User { get; set; }
     }
 }

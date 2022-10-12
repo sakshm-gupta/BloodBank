@@ -11,42 +11,42 @@ namespace BloodBankMSApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BloodDonorsController : ControllerBase
+    public class BloodDonationCampsController : ControllerBase
     {
         private readonly BloodBankMSContext _context;
 
-        public BloodDonorsController(BloodBankMSContext context)
+        public BloodDonationCampsController(BloodBankMSContext context)
         {
             _context = context;
         }
 
-        // GET: api/BloodDonors
+        // GET: api/BloodDonationCamps
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<BloodDonor>>> GetBloodDonors()
+        public async Task<ActionResult<IEnumerable<BloodDonationCamp>>> GetBloodDonationCamps()
         {
-            return await _context.BloodDonors.ToListAsync();
+            return await _context.BloodDonationCamps.ToListAsync();
         }
 
-        // GET: api/BloodDonors/5
+        // GET: api/BloodDonationCamps/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<BloodDonor>> GetBloodDonor(int id)
+        public async Task<ActionResult<BloodDonationCamp>> GetBloodDonationCamp(int id)
         {
-            var bloodDonor = await _context.BloodDonors.FindAsync(id);
+            var bloodDonationCamp = await _context.BloodDonationCamps.FindAsync(id);
 
-            if (bloodDonor == null)
+            if (bloodDonationCamp == null)
             {
                 return NotFound();
             }
 
-            return bloodDonor;
+            return bloodDonationCamp;
         }
 
-        // PUT: api/BloodDonors/5
+        // PUT: api/BloodDonationCamps/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutBloodDonor(int id, BloodDonor bloodDonor)
+        public async Task<IActionResult> PutBloodDonationCamp(int id, BloodDonationCamp bloodDonationCamp)
         {
-            if (id != bloodDonor.Id)
+            if (id != bloodDonationCamp.Id)
             {
                 return BadRequest();
             }
@@ -54,7 +54,8 @@ namespace BloodBankMSApi.Controllers
             {
                 return BadRequest(ModelState);
             }
-            _context.Entry(bloodDonor).State = EntityState.Modified;
+
+            _context.Entry(bloodDonationCamp).State = EntityState.Modified;
 
             try
             {
@@ -62,7 +63,7 @@ namespace BloodBankMSApi.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!BloodDonorExists(id))
+                if (!BloodDonationCampExists(id))
                 {
                     return NotFound();
                 }
@@ -75,42 +76,40 @@ namespace BloodBankMSApi.Controllers
             return NoContent();
         }
 
-        // POST: api/BloodDonors
+        // POST: api/BloodDonationCamps
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-
-        public async Task<ActionResult<BloodDonor>> PostBloodDonor(BloodDonor bloodDonor)
+        public async Task<ActionResult<BloodDonationCamp>> PostBloodDonationCamp(BloodDonationCamp bloodDonationCamp)
         {
-
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            _context.BloodDonors.Add(bloodDonor);
+            _context.BloodDonationCamps.Add(bloodDonationCamp);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetBloodDonor", new { id = bloodDonor.Id }, bloodDonor);
+            return CreatedAtAction("GetBloodDonationCamp", new { id = bloodDonationCamp.Id }, bloodDonationCamp);
         }
 
-        // DELETE: api/BloodDonors/5
+        // DELETE: api/BloodDonationCamps/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteBloodDonor(int id)
+        public async Task<IActionResult> DeleteBloodDonationCamp(int id)
         {
-            var bloodDonor = await _context.BloodDonors.FindAsync(id);
-            if (bloodDonor == null)
+            var bloodDonationCamp = await _context.BloodDonationCamps.FindAsync(id);
+            if (bloodDonationCamp == null)
             {
                 return NotFound();
             }
 
-            _context.BloodDonors.Remove(bloodDonor);
+            _context.BloodDonationCamps.Remove(bloodDonationCamp);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool BloodDonorExists(int id)
+        private bool BloodDonationCampExists(int id)
         {
-            return _context.BloodDonors.Any(e => e.Id == id);
+            return _context.BloodDonationCamps.Any(e => e.Id == id);
         }
     }
 }

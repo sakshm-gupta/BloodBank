@@ -12,14 +12,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BloodBankMSApi.Migrations
 {
     [DbContext(typeof(BloodBankMSContext))]
-    [Migration("20221011105148_SecondMigration")]
-    partial class SecondMigration
+    [Migration("20221012073614_First Migration")]
+    partial class FirstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.9")
+                .HasAnnotation("ProductVersion", "6.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -46,13 +46,6 @@ namespace BloodBankMSApi.Migrations
 
                     b.Property<long>("ContactNo")
                         .HasColumnType("bigint");
-
-                    b.Property<int>("Password")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -89,8 +82,6 @@ namespace BloodBankMSApi.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("BloodBankId");
 
                     b.ToTable("BloodDonationCamps");
                 });
@@ -138,15 +129,20 @@ namespace BloodBankMSApi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("BloodBankId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BloodDonationCampId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("BloodDonationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("BloodDonorId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("BloodDonorId1")
+                    b.Property<int>("BloodDonorId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("ExpiryDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<double>("HBCount")
                         .HasColumnType("float");
@@ -159,7 +155,9 @@ namespace BloodBankMSApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BloodDonorId1");
+                    b.HasIndex("BloodDonationCampId");
+
+                    b.HasIndex("BloodDonorId");
 
                     b.ToTable("BloodDonorDonations");
                 });
@@ -224,22 +222,35 @@ namespace BloodBankMSApi.Migrations
                     b.ToTable("Hospitals");
                 });
 
-            modelBuilder.Entity("BloodBankMSApi.Models.BloodDonationCamp", b =>
+            modelBuilder.Entity("BloodBankMSApi.Models.User", b =>
                 {
-                    b.HasOne("BloodBankMSApi.Models.BloodBank", "BloodBank")
-                        .WithMany()
-                        .HasForeignKey("BloodBankId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Navigation("BloodBank");
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId");
+
+                    b.ToTable("User");
                 });
 
             modelBuilder.Entity("BloodBankMSApi.Models.BloodDonorDonation", b =>
                 {
+                    b.HasOne("BloodBankMSApi.Models.BloodDonationCamp", "BloodDonationCamp")
+                        .WithMany()
+                        .HasForeignKey("BloodDonationCampId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("BloodBankMSApi.Models.BloodDonor", "BloodDonor")
                         .WithMany()
-                        .HasForeignKey("BloodDonorId1");
+                        .HasForeignKey("BloodDonorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("BloodDonationCamp");
 
                     b.Navigation("BloodDonor");
                 });

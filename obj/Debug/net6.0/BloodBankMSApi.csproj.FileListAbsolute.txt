@@ -524,3 +524,4 @@ E:\.Net_Core_With_Azure_Training\07_Sprint_01\BloodBank\obj\Debug\net6.0\refint\
 E:\.Net_Core_With_Azure_Training\07_Sprint_01\BloodBank\obj\Debug\net6.0\BloodBankMSApi.pdb
 E:\.Net_Core_With_Azure_Training\07_Sprint_01\BloodBank\obj\Debug\net6.0\BloodBankMSApi.genruntimeconfig.cache
 E:\.Net_Core_With_Azure_Training\07_Sprint_01\BloodBank\obj\Debug\net6.0\ref\BloodBankMSApi.dll
+D:\Blood Bank\BloodBankMSApi\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.dll

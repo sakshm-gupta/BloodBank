@@ -11,42 +11,42 @@ namespace BloodBankMSApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BloodDonorsController : ControllerBase
+    public class HospitalsController : ControllerBase
     {
         private readonly BloodBankMSContext _context;
 
-        public BloodDonorsController(BloodBankMSContext context)
+        public HospitalsController(BloodBankMSContext context)
         {
             _context = context;
         }
 
-        // GET: api/BloodDonors
+        // GET: api/Hospitals
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<BloodDonor>>> GetBloodDonors()
+        public async Task<ActionResult<IEnumerable<Hospital>>> GetHospitals()
         {
-            return await _context.BloodDonors.ToListAsync();
+            return await _context.Hospitals.ToListAsync();
         }
 
-        // GET: api/BloodDonors/5
+        // GET: api/Hospitals/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<BloodDonor>> GetBloodDonor(int id)
+        public async Task<ActionResult<Hospital>> GetHospital(int id)
         {
-            var bloodDonor = await _context.BloodDonors.FindAsync(id);
+            var hospital = await _context.Hospitals.FindAsync(id);
 
-            if (bloodDonor == null)
+            if (hospital == null)
             {
                 return NotFound();
             }
 
-            return bloodDonor;
+            return hospital;
         }
 
-        // PUT: api/BloodDonors/5
+        // PUT: api/Hospitals/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutBloodDonor(int id, BloodDonor bloodDonor)
+        public async Task<IActionResult> PutHospital(int id, Hospital hospital)
         {
-            if (id != bloodDonor.Id)
+            if (id != hospital.Id)
             {
                 return BadRequest();
             }
@@ -54,7 +54,8 @@ namespace BloodBankMSApi.Controllers
             {
                 return BadRequest(ModelState);
             }
-            _context.Entry(bloodDonor).State = EntityState.Modified;
+
+            _context.Entry(hospital).State = EntityState.Modified;
 
             try
             {
@@ -62,7 +63,7 @@ namespace BloodBankMSApi.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!BloodDonorExists(id))
+                if (!HospitalExists(id))
                 {
                     return NotFound();
                 }
@@ -75,42 +76,40 @@ namespace BloodBankMSApi.Controllers
             return NoContent();
         }
 
-        // POST: api/BloodDonors
+        // POST: api/Hospitals
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-
-        public async Task<ActionResult<BloodDonor>> PostBloodDonor(BloodDonor bloodDonor)
+        public async Task<ActionResult<Hospital>> PostHospital(Hospital hospital)
         {
-
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            _context.BloodDonors.Add(bloodDonor);
+            _context.Hospitals.Add(hospital);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetBloodDonor", new { id = bloodDonor.Id }, bloodDonor);
+            return CreatedAtAction("GetHospital", new { id = hospital.Id }, hospital);
         }
 
-        // DELETE: api/BloodDonors/5
+        // DELETE: api/Hospitals/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteBloodDonor(int id)
+        public async Task<IActionResult> DeleteHospital(int id)
         {
-            var bloodDonor = await _context.BloodDonors.FindAsync(id);
-            if (bloodDonor == null)
+            var hospital = await _context.Hospitals.FindAsync(id);
+            if (hospital == null)
             {
                 return NotFound();
             }
 
-            _context.BloodDonors.Remove(bloodDonor);
+            _context.Hospitals.Remove(hospital);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool BloodDonorExists(int id)
+        private bool HospitalExists(int id)
         {
-            return _context.BloodDonors.Any(e => e.Id == id);
+            return _context.Hospitals.Any(e => e.Id == id);
         }
     }
 }

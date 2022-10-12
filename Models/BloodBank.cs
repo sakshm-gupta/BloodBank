@@ -6,7 +6,7 @@ namespace BloodBankMSApi.Models
     public class BloodBank
     {
         //[Required]
-        public int BloodBankId { get; set; }//bloodbankId
+        public int Id { get; set; }//bloodbankId
         
         [Required]
         public string BloodBankName { get; set; }
@@ -21,10 +21,10 @@ namespace BloodBankMSApi.Models
         [RegularExpression(@"^\d{10}$")]
         public long ContactNo { get; set; }
         
-        [Required]
-        public string UserId{ get; set; }
+        //[Required]
+        //public string UserId{ get; set; }
         
-        [Required]
-        public int Password{ get; set; }
+        //[Required]
+        //public int Password{ get; set; }
     }
 }

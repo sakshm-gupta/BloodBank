@@ -17,18 +17,18 @@ namespace BloodBankMSApi.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.9")
+                .HasAnnotation("ProductVersion", "6.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
             modelBuilder.Entity("BloodBankMSApi.Models.BloodBank", b =>
                 {
-                    b.Property<int>("BloodBankId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BloodBankId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Address")
                         .IsRequired()
@@ -45,14 +45,7 @@ namespace BloodBankMSApi.Migrations
                     b.Property<long>("ContactNo")
                         .HasColumnType("bigint");
 
-                    b.Property<int>("Password")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("BloodBankId");
+                    b.HasKey("Id");
 
                     b.ToTable("BloodBanks");
                 });
@@ -225,6 +218,20 @@ namespace BloodBankMSApi.Migrations
                     b.HasIndex("BloodBankId");
 
                     b.ToTable("Hospitals");
+                });
+
+            modelBuilder.Entity("BloodBankMSApi.Models.User", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId");
+
+                    b.ToTable("User");
                 });
 
             modelBuilder.Entity("BloodBankMSApi.Models.BloodDonorDonation", b =>
